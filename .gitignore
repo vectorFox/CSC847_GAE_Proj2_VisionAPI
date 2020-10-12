@@ -1,0 +1,4 @@
+.gcloudignore
+__pycache__
+.vscode
+venv

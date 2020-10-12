@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Photobook Application</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container-fluid" style="padding: 0">
+      <nav
+        class="navbar navbar-expand-lg navbar-dark bg-dark"
+        style="border-bottom: 1px dotted #fff"
+      >
+        <div class="navbar-brand">
+          <a class="navbar-brand" href="/">My Photobook</a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a class="nav-link" href="/photos/upload">Upload a Photo</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container-fluid" style="padding: 0">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav">
+          <li>
+            <a
+              class="nav-link"
+              href="/photos/animals"
+              style="color: rgb(215, 216, 128); font-weight: 450"
+            >
+              Animals</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li>
+            <a
+              class="nav-link"
+              href="/photos/flowers"
+              style="color: rgb(215, 216, 128); font-weight: 450"
+            >
+              Flowers</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li>
+            <a
+              class="nav-link"
+              href="/photos/people"
+              style="color: rgb(215, 216, 128); font-weight: 450"
+            >
+              People</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li>
+            <a
+              class="nav-link"
+              href="/photos/others"
+              style="color: rgb(215, 216, 128); font-weight: 450"
+            >
+              Others</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container-fluid">{% block content %}{% endblock %}</div>
+  </body>
+</html>

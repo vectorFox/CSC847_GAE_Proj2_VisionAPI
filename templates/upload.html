@@ -1,0 +1,49 @@
+{# [START form] #}{% extends "index.html" %} {% block content %}
+
+<div class="container-sm" style="width: 300px; margin-left: 20px">
+  <h4 class="font-italic" style="padding-top: 20px">Upload a Photo</h4>
+  <form action="upload" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="Photographer">Photographer</label>
+      <input
+        type="text"
+        name="photographer"
+        id="photographer"
+        value=""
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="capturedDate">Date Captured</label>
+      <input
+        type="datetime-local"
+        name="captureddate"
+        id="captureddate"
+        value=""
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input
+        type="text"
+        name="location"
+        id="location"
+        value=""
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="photoUpload">Upload Photo</label>
+      <input
+        type="file"
+        name="file"
+        class="form-control-file"
+        id="photoUpload"
+      />
+    </div>
+    <input type="submit" name="submit" class="btn btn-dark" value="Add Entry" />
+  </form>
+</div>
+
+{% endblock %}{# [END form] #}

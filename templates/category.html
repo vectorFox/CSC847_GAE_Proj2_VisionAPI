@@ -1,0 +1,47 @@
+{% extends "index.html" %} {% block content %}
+<div>
+  <h4 class="font-italic" style="padding-top: 20px">Photos of Animals</h4>
+  <br />
+  <div class="row">
+    {% for category in photos_category %}
+    <div class="col-sm-3">
+      <img
+        src="{{ category['What'] }}"
+        width="250"
+        height="250"
+        style="margin: 0px 30px 0px 30px"
+      />
+      <div style="margin: 0px 30px 0px 60px">
+        <p>Category: {{ category['Which'] }}</p>
+        <p>Photographer: {{ category['Who'] }}</p>
+        <p>Location: {{ category['Where'] }}</p>
+        <p>Date: {{ category['When'] }}</p>
+      </div>
+      <div class="row" style="margin: 0px 30px 0px 0px">
+        <div class="col-sm-6">
+          <a
+            class="nav-link"
+            href="/photos/{{category['kind']}}/{{category['id']}}/edit"
+          >
+            <button type="submit" name="submit" class="btn btn-dark">
+              Edit Entry
+            </button></a
+          >
+        </div>
+        <div class="col-sm-3">
+          <a
+            class="nav-link"
+            href="/photos/{{category['kind']}}/{{category['id']}}/delete"
+          >
+            <button type="submit" name="submit" class="btn btn-danger">
+              Delete
+            </button></a
+          >
+        </div>
+      </div>
+      ----------------------------------------
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

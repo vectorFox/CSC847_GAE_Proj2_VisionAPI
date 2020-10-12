@@ -1,0 +1,96 @@
+{# [START form] #}{% extends "index.html" %} {% block content %}
+
+<div class="container-sm" style="width: 300px; margin-left: 20px">
+  <h4 class="font-italic" style="padding-top: 20px">Edit an Entry</h4>
+  <form action="edit" method="POST" enctype="multipart/form-data">
+    {% for result in results %}
+    <div class="form-group">
+      <label for="Category">Category</label>
+      {% if result['Which'] in 'animals' %}
+      <select name="category" id="category" class="form-control">
+        <option value="{{result['Which']}}">{{result['Which']}}</option>
+        <option value="flowers">flowers</option>
+        <option value="people">people</option>
+        <option value="others">others</option>
+      </select>
+      {% elif result['Which'] in 'flowers' %}
+      <select name="category" id="category" class="form-control">
+        <option value="{{result['Which']}}">{{result['Which']}}</option>
+        <option value="animals">animals</option>
+        <option value="people">people</option>
+        <option value="others">others</option>
+      </select>
+      {% elif result['Which'] in 'people' %}
+      <select name="category" id="category" class="form-control">
+        <option value="{{result['Which']}}">{{result['Which']}}</option>
+        <option value="animals">animals</option>
+        <option value="flowers">flowers</option>
+        <option value="others">others</option>
+      </select>
+      {% else %}
+      <select name="category" id="category" class="form-control">
+        <option value="{{result['Which']}}">{{result['Which']}}</option>
+        <option value="animals">animals</option>
+        <option value="flowers">flowers</option>
+        <option value="people">people</option>
+      </select>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="Photographer">Photographer</label>
+      <input
+        type="text"
+        name="photographer"
+        id="photographer"
+        value="{{result['Who']}}"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="capturedDate">Date Captured</label>
+      <input
+        type="datetime-local"
+        name="captureddate"
+        id="captureddate"
+        value="{{result['When']}}"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input
+        type="text"
+        name="location"
+        id="location"
+        value="{{result['Where']}}"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="photoUpload">Uploaded Photo</label>
+      <img src="{{ result['What'] }}" width="250" height="250" />
+      <input
+        type="hidden"
+        name="uploadedphoto"
+        id="uploadedphoto"
+        value="{{result['What']}}"
+        class="form-control"
+      />
+      <input
+        type="file"
+        name="file"
+        class="form-control-file"
+        id="photoUpload"
+      />
+    </div>
+    <input
+      type="submit"
+      name="submit"
+      class="btn btn-dark"
+      value="Update Entry"
+    />
+    {% endfor %}
+  </form>
+</div>
+
+{% endblock %}{# [END form] #}
