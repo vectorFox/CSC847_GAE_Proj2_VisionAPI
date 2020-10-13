@@ -63,7 +63,7 @@ def vision_api(blob):
     image_label = " "
     if  "Mammal" in all_labels:
         image_label = "animals"
-    elif "Human" in all_labels:
+    elif "Human" in all_labels or "People" in all_labels:
         image_label = "people"
     elif "Flower" in all_labels:
         image_label = "flowers"

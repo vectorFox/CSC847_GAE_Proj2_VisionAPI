@@ -6,33 +6,33 @@
     {% for result in results %}
     <div class="form-group">
       <label for="Category">Category</label>
-      {% if result['Which'] in 'animals' %}
+      {% if result['Which'] in 'Animals' %}
       <select name="category" id="category" class="form-control">
         <option value="{{result['Which']}}">{{result['Which']}}</option>
-        <option value="flowers">flowers</option>
-        <option value="people">people</option>
-        <option value="others">others</option>
+        <option value="flowers">Flowers</option>
+        <option value="people">People</option>
+        <option value="others">Others</option>
       </select>
-      {% elif result['Which'] in 'flowers' %}
+      {% elif result['Which'] in 'Flowers' %}
       <select name="category" id="category" class="form-control">
         <option value="{{result['Which']}}">{{result['Which']}}</option>
-        <option value="animals">animals</option>
-        <option value="people">people</option>
-        <option value="others">others</option>
+        <option value="animals">Animals</option>
+        <option value="people">People</option>
+        <option value="others">Others</option>
       </select>
-      {% elif result['Which'] in 'people' %}
+      {% elif result['Which'] in 'People' %}
       <select name="category" id="category" class="form-control">
         <option value="{{result['Which']}}">{{result['Which']}}</option>
-        <option value="animals">animals</option>
-        <option value="flowers">flowers</option>
-        <option value="others">others</option>
+        <option value="animals">Animals</option>
+        <option value="flowers">Flowers</option>
+        <option value="others">Others</option>
       </select>
       {% else %}
       <select name="category" id="category" class="form-control">
         <option value="{{result['Which']}}">{{result['Which']}}</option>
-        <option value="animals">animals</option>
-        <option value="flowers">flowers</option>
-        <option value="people">people</option>
+        <option value="animals">Animals</option>
+        <option value="flowers">Flowers</option>
+        <option value="people">People</option>
       </select>
       {% endif %}
     </div>
