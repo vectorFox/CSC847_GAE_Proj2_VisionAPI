@@ -5,7 +5,7 @@
   <form action="edit" method="POST" enctype="multipart/form-data">
     {% for result in results %}
     <div class="form-group">
-      <label for="Category">Category</label>
+      <label for="Category" style="font-weight: 500">Category</label>
       {% if result['Which'] in 'Animals' %}
       <select name="category" id="category" class="form-control">
         <option value="{{result['Which']}}">{{result['Which']}}</option>
@@ -37,7 +37,7 @@
       {% endif %}
     </div>
     <div class="form-group">
-      <label for="Photographer">Photographer</label>
+      <label for="Photographer" style="font-weight: 500">Photographer</label>
       <input
         type="text"
         name="photographer"
@@ -47,7 +47,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="capturedDate">Date Captured</label>
+      <label for="capturedDate" style="font-weight: 500">Date Captured</label>
       <input
         type="datetime-local"
         name="captureddate"
@@ -57,7 +57,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="location">Location</label>
+      <label for="location" style="font-weight: 500">Location</label>
       <input
         type="text"
         name="location"
@@ -67,7 +67,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="photoUpload">Uploaded Photo</label>
+      <label for="photoUpload" style="font-weight: 500">Uploaded Photo</label>
       <img src="{{ result['What'] }}" width="250" height="250" />
       <input
         type="hidden"

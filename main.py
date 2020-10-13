@@ -102,8 +102,8 @@ def edit(category, category_id):
             if(image_label.capitalize() != category):
                 datastore_client.delete(id_key)
             return redirect('/photos/'+image_label)
-        elif(request.form['category']!=category):
-            entity = datastore.Entity(key=datastore_client.key(request.form['category']))
+        elif(request.form['category']!=category.capitalize()):
+            entity = datastore.Entity(key=datastore_client.key(request.form['category'].lower()))
             entity.update({
                 'Who' : request.form['photographer'],
                 'Where' : request.form['location'],
@@ -113,7 +113,7 @@ def edit(category, category_id):
             })
             datastore_client.put(entity)
             datastore_client.delete(id_key)
-            return redirect('/photos/'+request.form['category'])
+            return redirect('/photos/'+request.form['category'].lower())
         else:
             entity = datastore.Entity(key=datastore_client.key(category,int(category_id)))
             entity.update({
