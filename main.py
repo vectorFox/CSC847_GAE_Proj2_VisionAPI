@@ -6,7 +6,7 @@ from google.cloud import storage
 from google.cloud import vision
 from google.cloud import error_reporting
 app= Flask(__name__)
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']=r'Vision-API-GAE-Proj2-4687394a0854.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']=r'vision-api-gae-proj2-c87fa1734be2.json'
 os.environ['CLOUD_STORAGE_BUCKET']='vision-api-gae-proj2'
 CLOUD_STORAGE_BUCKET = os.environ.get("CLOUD_STORAGE_BUCKET", "vision-api-gae-proj2")
 datastore_client = datastore.Client()
@@ -23,10 +23,21 @@ def root():
 @app.route('/photos/<category>')
 def photos_cat(category):
     query = datastore_client.query(kind=category)
-    photos_category = query.fetch()
+    photos_category = query.fetch()    
+    # print("Count : "+ str(count))
     category=category.capitalize()
+    photos_count(category)
     return render_template(
         'category.html', photos_category=photos_category, category=category)
+
+def photos_count(category):
+    query = datastore_client.query(kind=category)
+    count_photos = query.fetch()
+    count = 0
+    for photoct in count_photos:
+        count = count + 1
+    return render_template('index.html', count=count)
+
 
 @app.route('/photos/upload', methods=['GET', 'POST'])
 def upload():
@@ -55,12 +66,11 @@ def vision_api(blob):
     image = vision.Image()
     image.source.image_uri = image_uri
     response = vision_client.label_detection(image=image)
+    objects = vision_client.object_localization(image=image).localized_object_annotations
     for label in response.label_annotations:
-        # print(label.description, '(%.2f%%)' % (label.score*100.))
         all_labels.append(label.description)
-    # print(all_labels)
     image_label = " "
-    if  "Mammal" in all_labels:
+    if  "Mammal" in all_labels or "Livestock" in all_labels:
         image_label = "animals"
     elif "Human" in all_labels or "People" in all_labels:
         image_label = "people"
@@ -68,6 +78,13 @@ def vision_api(blob):
         image_label = "flowers"
     else:
         image_label = "others"
+    if image_label in "others":
+        all_objects = []
+        for objectname in objects:
+            all_objects.append(format(objectname.name))
+        # print(all_objects)
+        if  "Person" in all_objects:
+            image_label = "people"
     return image_label
         
 @app.route('/photos/<category>/<category_id>/edit', methods=['GET', 'POST'])
@@ -82,13 +99,16 @@ def edit(category, category_id):
             for result in results:
                 blob_url=result['What']
             blob_name = blob_url[52:]
+            blob_name=urllib.parse.unquote(blob_name)
             blob = bucket.blob(blob_name)
+            print("blob_name " + blob_name)
             blob.delete()
             blob = bucket.blob(photo.filename)
+            print("photo.filename " + photo.filename)
             blob.upload_from_string(photo.read(), content_type=photo.content_type)
             blob.make_public()
             image_label = vision_api(blob)
-            # print("IMAGE_LABEL " + image_label)
+            print("IMAGE_LABEL " + image_label)
             entity = datastore.Entity(key=datastore_client.key(image_label,int(category_id)))
             entity.update({
                 'Who' : request.form['photographer'],
@@ -99,10 +119,12 @@ def edit(category, category_id):
             })
             datastore_client.put(entity)
             if(image_label.capitalize() != category):
+                print("Inside if label capitalize")
                 datastore_client.delete(id_key)
             return redirect('/photos/'+image_label)
         elif(request.form['category']!=category.capitalize()):
             entity = datastore.Entity(key=datastore_client.key(request.form['category'].lower()))
+            print("Inside change cat ")
             entity.update({
                 'Who' : request.form['photographer'],
                 'Where' : request.form['location'],
@@ -110,7 +132,7 @@ def edit(category, category_id):
                 'Which' : request.form['category'].capitalize(),
                 'What' : request.form['uploadedphoto']
             })
-            datastore_client.put(entity)
+            datastore_client.put(entity)            
             datastore_client.delete(id_key)
             return redirect('/photos/'+request.form['category'].lower())
         else:
@@ -127,7 +149,7 @@ def edit(category, category_id):
     return render_template('edit.html', results=results)
 
 @app.route('/photos/<category>/<category_id>/delete')
-def delete(category, category_id):
+def delete(category, category_id):    
     query = datastore_client.query(kind=category)
     id_key = datastore_client.key(category, int(category_id))
     query.key_filter(id_key, '=')
