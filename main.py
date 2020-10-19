@@ -24,20 +24,20 @@ def root():
 def photos_cat(category):
     query = datastore_client.query(kind=category)
     photos_category = query.fetch()    
-    # print("Count : "+ str(count))
     category=category.capitalize()
-    photos_count(category)
+    # photos_count(category)
     return render_template(
         'category.html', photos_category=photos_category, category=category)
 
-def photos_count(category):
-    query = datastore_client.query(kind=category)
-    count_photos = query.fetch()
-    count = 0
-    for photoct in count_photos:
-        count = count + 1
-    return render_template('index.html', count=count)
-
+# def photos_count(category):
+#     query = datastore_client.query(kind=category)
+#     count_photos = query.fetch()
+#     count = 0
+#     for photoct in count_photos:
+#         count = count + 1
+#     print("in here")
+#     # print("Count : "+ str(count))
+#     render_template('index.html', count=count)
 
 @app.route('/photos/upload', methods=['GET', 'POST'])
 def upload():
