@@ -118,8 +118,8 @@ def edit(category, category_id):
                 'Which' : image_label.capitalize()
             })
             datastore_client.put(entity)
-            if(image_label.capitalize() != category):
-                print("Inside if label capitalize")
+            if(image_label != category):
+                # print("Inside if label" + image_label + category)
                 datastore_client.delete(id_key)
             return redirect('/photos/'+image_label)
         elif(request.form['category']!=category.capitalize()):
